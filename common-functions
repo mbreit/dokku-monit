@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+escape_string() {
+    echo "${1//[^[:alnum:][:blank:]@.\/?=-]/}"
+}
+
+escape_domain() {
+    echo "${1//[^[:alnum:].-]/}"
+}
+
+escape_number() {
+    echo "${1//[^[:digit:]]/}"
+}

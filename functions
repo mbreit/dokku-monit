@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+source "$PLUGIN_AVAILABLE_PATH/config/functions"
+source "$PLUGIN_AVAILABLE_PATH/domains/functions"
+source "$PLUGIN_AVAILABLE_PATH/certs/functions"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common-functions"
+
+monit_build_app_config() {
+    local app="$1"
+
+    local dokku_bin="/usr/bin/dokku"
+    local template_file="$plugin_path/templates/monit.sigil"
+    local monit_config_file="$DOKKU_ROOT/$app/monitrc"
+    local domains=($(get_app_domains "$app"))
+    local domain="$(escape_domain ${domains[0]})"
+    local address="localhost"
+
+    local ssl=false
+    local scheme="http"
+    local port="$(escape_number "$(config_get "$app" DOKKU_NGINX_PORT)")"
+
+    if is_ssl_enabled "$app"; then
+        local ssl=true
+        local scheme="https"
+        local port="$(escape_number "$(config_get "$app" DOKKU_NGINX_SSL_PORT)")"
+    fi
+
+    local content="$(escape_string "$(config_get "$app" MONIT_CONTENT || true)")"
+    local request="$(escape_string "$(config_get "$app" MONIT_REQUEST || true)")"
+    local alert="$(escape_string "$(config_get "$app" MONIT_ALERT || true)")"
+    local monit_enabled="$(config_get "$app" MONIT_ENABLED || true)"
+
+    sigil -f "$template_file" APP="$app" DOMAIN="$domain" ALERT="$alert" CONTENT="$content" REQUEST="$request" PORT="$port" SCHEME="$scheme" SSL="$ssl" DOKKU_BIN="$dokku_bin" MONIT_ENABLED="$monit_enabled" ADDRESS="$address" > "$monit_config_file"
+}
+
+monit_reload() {
+  monit reload
+}
