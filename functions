@@ -45,9 +45,10 @@ monit_reload() {
 }
 
 monit_enable() {
-    config_set "$1" "MONIT_ENABLED=true"
+
+    config_set --no-restart "$1" "MONIT_ENABLED=true"
 }
 
 monit_disable() {
-    config_unset "$1" "MONIT_ENABLED"
+    config_unset --no-restart "$1" "MONIT_ENABLED"
 }
