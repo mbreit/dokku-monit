@@ -41,5 +41,13 @@ monit_cmd() {
 }
 
 monit_reload() {
-    monit reload
+    monit_cmd reload
+}
+
+monit_enable() {
+    config_set "$1" "MONIT_ENABLED=true"
+}
+
+monit_disable() {
+    config_unset "$1" "MONIT_ENABLED"
 }

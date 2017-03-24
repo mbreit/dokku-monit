@@ -4,6 +4,8 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 monit_help_content_func() {
   declare desc="return monit plugin help content"
   cat<<help_content
+    monit:enable <app>, Create a Monit configuration for this app and start monitoring
+    monit:disable <app>, Remove Monit configuration from this app
     monit:status <app>, Show the apps Monit status
     monit:statusall, Show Monit status for all apps
     monit:monitor <app>, Enable monitoring for app with disabled monitoring
