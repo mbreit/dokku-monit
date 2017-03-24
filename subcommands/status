@@ -15,7 +15,7 @@ monit_status_cmd() {
     [[ -z $2 ]] && dokku_log_fail "Please specify an app to run the command on"
     local app="$2"; verify_app_name "$2"
 
-    monit_status "$app"
+    monit_cmd status "$app"
 }
 
 monit_status_cmd "$@"

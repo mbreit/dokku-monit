@@ -36,14 +36,10 @@ monit_build_app_config() {
     sigil -f "$template_file" APP="$app" DOMAIN="$domain" ALERT="$alert" CONTENT="$content" REQUEST="$request" PORT="$port" SCHEME="$scheme" SSL="$ssl" DOKKU_BIN="$dokku_bin" MONIT_ENABLED="$monit_enabled" ADDRESS="$address" > "$monit_config_file"
 }
 
+monit_cmd() {
+    monit $@
+}
+
 monit_reload() {
     monit reload
-}
-
-monit_status() {
-    monit status "$1"
-}
-
-monit_statusall() {
-    monit status
 }
