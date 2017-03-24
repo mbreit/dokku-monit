@@ -10,6 +10,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common-functions"
 monit_build_app_config() {
     local app="$1"
 
+    local plugin_path="$(dirname "${BASH_SOURCE[0]}")"
     local dokku_bin="/usr/bin/dokku"
     local template_file="$plugin_path/templates/monit.sigil"
     local monit_config_file="$DOKKU_ROOT/$app/monitrc"
