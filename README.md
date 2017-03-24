@@ -64,3 +64,8 @@ The following configuration variables can be set:
 * `MONIT_CONTENT`: Expected content in HTTP response
 * `MONIT_REQUEST`: Request path, eg. `/status`
 * `MONIT_ALERT`: Mail address to notify on state changes
+
+## License
+
+This project is released under the MIT License. See the
+[LICENSE](LICENSE) file for details.
