@@ -19,24 +19,48 @@ sudo dokku plugin:install https://github.com/mbreit/dokku-monit.git
 
 ## Usage
 
-You need to configure this plugin with `dokku config:set` for the
-apps you want to monitor.
-*This is not ideal and might change in future versions.*
+To see all available commands run:
+
+```shell
+dokku monit
+```
 
 To enable monit for an app run:
 
 ```shell
-dokku config:set --no-restart myapp MONIT_ENABLED=true
+dokku monit:enable myapp
 ```
 
 This will send an http request to the application every two minutes.
 When it fails two times, the app will be restarted.
 
+To remove the app from Monit, run:
+
+```shell
+dokku monit:disable myapp
+```
+
+If you want do temporarily disable and enable monitoring, you can use:
+
+```shell
+dokku monit:unmonitor myapp
+dokku monit:monitor myapp
+```
+
+This keeps the Monit configuration but disables the check with
+Monit.
+
+To show the apps Monit status, run one of:
+
+```shell
+dokku monit:status myapp
+dokku monit:statusall
+```
+
 ## Configuration
 
 The following configuration variables can be set:
 
-* `MONIT_ENABLED`: Enable monitoring for one app, unset or set to empty string to disable
 * `MONIT_CONTENT`: Expected content in HTTP response
 * `MONIT_REQUEST`: Request path, eg. `/status`
 * `MONIT_ALERT`: Mail address to notify on state changes
