@@ -2,7 +2,7 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 plugin-install() {
-    local plugin_path="$(dirname "$0")"
+    local plugin_path="$PLUGIN_AVAILABLE_PATH/monit"
 
     if [[ ! -f "$DOKKU_ROOT/.monitrc" ]]; then
         cp monitrc "$DOKKU_ROOT/.monitrc"
