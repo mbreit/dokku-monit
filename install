@@ -2,7 +2,7 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 plugin-install() {
-    cd $(dirname "$0")
+    local plugin_path="$(dirname "$0")"
 
     if [[ ! -f "$DOKKU_ROOT/.monitrc" ]]; then
         cp monitrc "$DOKKU_ROOT/.monitrc"
@@ -11,12 +11,7 @@ plugin-install() {
         chmod 0500 "$DOKKU_ROOT/.monitrc"
     fi
 
-    if [[ ! -f /etc/systemd/system/dokku-monit.service ]]
-        cp dokku-monit.service /etc/systemd/system/dokku-monit.service
-
-        systemctl start dokku-monit
-        systemctl enable dokku-monit
-    fi
+    systemctl enable "$plugin_path/dokku-monit.service" --now
 }
 
 plugin-install
