@@ -50,7 +50,7 @@ dokku monit:monitor myapp
 This keeps the Monit configuration but disables the check with
 Monit.
 
-To show the apps Monit status, run one of:
+To show the Monit status, run one of:
 
 ```shell
 dokku monit:status myapp
@@ -59,7 +59,17 @@ dokku monit:statusall
 
 ## Configuration
 
-The following configuration variables can be set:
+You can configure Monit in the .monitrc file in the Dokku home directory.
+See https://mmonit.com/monit/documentation/monit.html for details.
+
+It is important to keep the `include /home/dokku/*/monitrc` line,
+because this is used to include the configuration for the individual
+Dokku apps. Everything else should be configurable without breaking
+the functionality of this app. This file does not get overwritten
+when updating this plugin.
+
+For configuring the individual app checks, you can set the
+foll following configuration variables:
 
 * `MONIT_CONTENT`: Expected content in HTTP response
 * `MONIT_REQUEST`: Request path, eg. `/status`
