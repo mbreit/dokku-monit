@@ -37,5 +37,13 @@ monit_build_app_config() {
 }
 
 monit_reload() {
-  monit reload
+    monit reload
+}
+
+monit_status() {
+    monit status "$1"
+}
+
+monit_statusall() {
+    monit status
 }
