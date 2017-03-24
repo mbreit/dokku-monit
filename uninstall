@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+PLUGIN="$1"
+
+[[ "$PLUGIN" = "monit" ]] && systemctl disable dokku-monit.service --now
