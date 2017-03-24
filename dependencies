@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Installs monit for the current plugin
+# Supports Ubuntu
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+export DEBIAN_FRONTEND=noninteractive
+
+case "$DOKKU_DISTRO" in
+  debian|ubuntu)
+    apt-get install --force-yes -qq -y monit
+    ;;
+esac
