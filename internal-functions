@@ -6,6 +6,8 @@ monit_help_content_func() {
   cat<<help_content
     monit:status <app>, Show the apps Monit status
     monit:statusall, Show Monit status for all apps
+    monit:monitor <app>, Enable monitoring for app with disabled monitoring
+    monit:unmonitor <app>, Disable monitoring for app (but keep in Monit configuration)
 help_content
 }
 
