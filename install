@@ -1,37 +1,22 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-if [[ ! -f "$DOKKU_ROOT/.monitrc" ]]; then
-  cat<<EOF > "$DOKKU_ROOT/dokku.conf"
-set daemon 120            # check services at 2-minute intervals
-set mailserver localhost
+plugin-install() {
+    cd $(dirname "$0")
 
-include $DOKKU_ROOT/*/monitrc
-EOF
+    if [[ ! -f "$DOKKU_ROOT/.monitrc" ]]; then
+        cp monitrc "$DOKKU_ROOT/.monitrc"
 
-  chown dokku:dokku $DOKKU_ROOT/.monitrc
-  chmod 0500 $DOKKU_ROOT/.monitrc
-fi
+        chown dokku:dokku "$DOKKU_ROOT/.monitrc"
+        chmod 0500 "$DOKKU_ROOT/.monitrc"
+    fi
 
-if [[ ! -f "/etc/systemd/system/dokku-monit.service" ]]
-   cat<<EOF > "/etc/systemd/system/dokku-monit.service"
-[Unit]
-Description=Monit instance for monitoring dokku apps
-After=docker.service
+    if [[ ! -f /etc/systemd/system/dokku-monit.service ]]
+        cp dokku-monit.service /etc/systemd/system/dokku-monit.service
 
-[Service]
-Type=simple
-KillMode=process
-ExecStart=/usr/bin/monit -I
-ExecStop=/usr/bin/monit quit
-ExecReload=/usr/bin/monit reload
-Restart=on-abnormal
-User=dokku
+        systemctl start dokku-monit
+        systemctl enable dokku-monit
+    fi
+}
 
-[Install]
-WantedBy=multi-user.target
-EOF
-
-   systemctl start dokku-monit
-   systemctl enable dokku-monit
-fi
+plugin-install

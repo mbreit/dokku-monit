@@ -1,0 +1,15 @@
+[Unit]
+Description=Monit instance for monitoring dokku apps
+After=docker.service
+
+[Service]
+Type=simple
+KillMode=process
+ExecStart=/usr/bin/monit -I
+ExecStop=/usr/bin/monit quit
+ExecReload=/usr/bin/monit reload
+Restart=on-abnormal
+User=dokku
+
+[Install]
+WantedBy=multi-user.target
