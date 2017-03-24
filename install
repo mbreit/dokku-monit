@@ -1,14 +1,37 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-echo "%dokku ALL=(ALL) NOPASSWD:/usr/bin/monit reload" > /etc/sudoers.d/dokku-monit
+if [[ ! -f "$DOKKU_ROOT/.monitrc" ]]; then
+  cat<<EOF > "$DOKKU_ROOT/dokku.conf"
+set daemon 120            # check services at 2-minute intervals
+set mailserver localhost
 
-chmod 0440 /etc/sudoers.d/dokku-monit
-
-if [[ ! -f /etc/monit/conf.d/dokku.conf ]]; then
-  cat<<EOF > /etc/monit/conf.d/dokku.conf
 include $DOKKU_ROOT/*/monitrc
 EOF
+
+  chown dokku:dokku $DOKKU_ROOT/.monitrc
+  chmod 0500 $DOKKU_ROOT/.monitrc
 fi
 
-/usr/bin/monit reload
+if [[ ! -f "/etc/systemd/system/dokku-monit.service" ]]
+   cat<<EOF > "/etc/systemd/system/dokku-monit.service"
+[Unit]
+Description=Monit instance for monitoring dokku apps
+After=docker.service
+
+[Service]
+Type=simple
+KillMode=process
+ExecStart=/usr/bin/monit -I
+ExecStop=/usr/bin/monit quit
+ExecReload=/usr/bin/monit reload
+Restart=on-abnormal
+User=dokku
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+   systemctl start dokku-monit
+   systemctl enable dokku-monit
+fi

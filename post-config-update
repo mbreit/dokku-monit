@@ -32,7 +32,7 @@ monit_build_config() {
 
     sigil -f $TEMPLATE_FILE APP="$APP" DOMAIN="$DOMAIN" ALERT="$ALERT" CONTENT="$CONTENT" REQUEST="$REQUEST" PORT=$PORT SCHEME=$SCHEME SSL=$SSL DOKKU_BIN="$DOKKU_BIN" MONIT_ENABLED=$MONIT_ENABLED ADDRESS="$ADDRESS" > $MONIT_CONFIG_FILE
 
-    sudo monit reload
+    monit reload
 }
 
 escape_string() {
