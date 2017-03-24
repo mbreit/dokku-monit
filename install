@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+echo "%dokku ALL=(ALL) NOPASSWD:/usr/bin/monit reload" > /etc/sudoers.d/dokku-monit
+
+chmod 0440 /etc/sudoers.d/dokku-monit
+
+if [[ ! -f /etc/monit/conf.d/dokku.conf ]]; then
+  cat<<EOF > /etc/monit/conf.d/dokku.conf
+include $DOKKU_ROOT/*/monitrc
+EOF
+fi
+
+/usr/bin/monit reload

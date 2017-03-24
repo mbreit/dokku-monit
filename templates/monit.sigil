@@ -1,0 +1,14 @@
+{{ if .MONIT_ENABLED }}
+check host {{ .APP }} with address {{ .ADDRESS }}
+  restart program = "{{ .DOKKU_BIN }} ps:restart {{ .APP }}"
+  if failed
+     port {{ .PORT }}
+     protocol {{ .SCHEME }}
+     http headers [Host: {{ .DOMAIN }}]
+     {{ if .REQUEST }}request "{{ .REQUEST }}" {{ end }}
+     {{ if .CONTENT }}content = "{{ .CONTENT }}"{{ end }}
+     for 2 cycles
+  then restart
+  if 3 restarts within 10 cycles then unmonitor
+  {{ if .ALERT }}alert {{ .ALERT }}{{ end }}
+{{ end }}

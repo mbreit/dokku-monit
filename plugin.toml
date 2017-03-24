@@ -1,0 +1,4 @@
+[plugin]
+description = "Automatic restarting of apps with Monit"
+version = "0.0.1"
+[plugin.config]
