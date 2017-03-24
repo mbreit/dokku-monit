@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+monit_help_content_func() {
+  declare desc="return monit plugin help content"
+  cat<<help_content
+    monit:status <app>, Show the apps Monit status
+    monit:statusall, Show Monit status for all apps
+help_content
+}
+
+monit_help_cmd() {
+  if [[ $1 = "monit:help" ]] ; then
+    echo -e 'Usage: dokku monit[:COMMAND]'
+    echo ''
+    echo 'Monitor and restart failing apps with Monit'
+    echo ''
+    echo 'Additional commands:'
+    monit_help_content_func | sort | column -c2 -t -s,
+  elif [[ $(ps -o command= $PPID) == *"--all"* ]]; then
+    monit_help_content_func
+  else
+    cat<<help_desc
+    monit, Monitor and restart failing apps with Monit
+help_desc
+  fi
+}
