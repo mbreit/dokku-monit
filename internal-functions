@@ -9,7 +9,9 @@ monit_help_content_func() {
     monit:status <app>, Show the apps Monit status
     monit:statusall, Show Monit status for all apps
     monit:monitor <app>, Enable monitoring for app with disabled monitoring
+    monit:monitorall, Enable monitoring all apps
     monit:unmonitor <app>, Disable monitoring for app (but keep in Monit configuration)
+    monit:unmonitorall, Disable monitoring for all apps
 help_content
 }
 
