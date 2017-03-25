@@ -62,6 +62,13 @@ dokku monit:status myapp
 dokku monit:statusall
 ```
 
+The monit logs can be shown with:
+
+```shell
+dokku monit:logs
+dokku monit:logs -f
+```
+
 ## Configuration
 
 You can configure Monit in the `.monitrc` file in the Dokku home directory.

@@ -12,6 +12,7 @@ monit_help_content_func() {
     monit:monitorall, Enable monitoring all apps
     monit:unmonitor <app>, Disable monitoring for app (but keep in Monit configuration)
     monit:unmonitorall, Disable monitoring for all apps
+    monit:logs [-f], Show Monit logs, -f to follow
 help_content
 }
 
