@@ -5,10 +5,10 @@ check host {{ .APP }} with address {{ .ADDRESS }}
      port {{ .PORT }}
      protocol {{ .SCHEME }}
      http headers [Host: {{ .DOMAIN }}]
-     {{ if .REQUEST }}request "{{ .REQUEST }}" {{ end }}
+     request "{{ default "/" .REQUEST }}"
      {{ if .CONTENT }}content = "{{ .CONTENT }}"{{ end }}
-     for 2 cycles
+     for {{ default 2 .RESTART_CYCLES }} cycles
   then restart
-  if 3 restarts within 10 cycles then unmonitor
+  {{ if ne .UNMONITOR_RESTARTS "0" }}if {{ default 5 .UNMONITOR_RESTARTS }} restarts within {{ default 20 .UNMONITOR_CYCLES }} cycles then unmonitor{{ end }}
   {{ if .ALERT }}alert {{ .ALERT }}{{ end }}
 {{ end }}
