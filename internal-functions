@@ -24,7 +24,7 @@ monit_help_cmd() {
     echo 'Monitor and restart failing apps with Monit'
     echo ''
     echo 'Additional commands:'
-    monit_help_content_func | sort | column -c2 -t -s,
+    monit_help_content_func | column -c2 -t -s,
   elif [[ $(ps -o command= $PPID) == *"--all"* ]]; then
     monit_help_content_func
   else
