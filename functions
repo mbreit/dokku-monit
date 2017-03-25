@@ -31,12 +31,13 @@ monit_build_app_config() {
     local content="$(escape_string "$(config_get "$app" MONIT_CONTENT || true)")"
     local request="$(escape_string "$(config_get "$app" MONIT_REQUEST || true)")"
     local alert="$(escape_string "$(config_get "$app" MONIT_ALERT || true)")"
+    local restart_timeout="$(escape_number "$(config_get "$app" MONIT_RESTART_TIMEOUT || true)")"
     local restart_cycles="$(escape_number "$(config_get "$app" MONIT_RESTART_CYCLES || true)")"
     local unmonitor_restarts="$(escape_number "$(config_get "$app" MONIT_UNMONITOR_RESTARTS || true)")"
     local unmonitor_cycles="$(escape_number "$(config_get "$app" MONIT_UNMONITOR_CYCLES || true)")"
     local monit_enabled="$(config_get "$app" MONIT_ENABLED || true)"
 
-    sigil -f "$template_file" APP="$app" DOMAIN="$domain" ALERT="$alert" CONTENT="$content" REQUEST="$request" RESTART_CYCLES="$restart_cycles" UNMONITOR_RESTARTS="$unmonitor_restarts" UNMONITOR_CYCLES="$unmonitor_cycles" PORT="$port" SCHEME="$scheme" SSL="$ssl" DOKKU_BIN="$dokku_bin" MONIT_ENABLED="$monit_enabled" ADDRESS="$address" > "$monit_config_file"
+    sigil -f "$template_file" APP="$app" DOMAIN="$domain" ALERT="$alert" CONTENT="$content" REQUEST="$request" RESTART_TIMEOUT="$restart_timeout" RESTART_CYCLES="$restart_cycles" UNMONITOR_RESTARTS="$unmonitor_restarts" UNMONITOR_CYCLES="$unmonitor_cycles" PORT="$port" SCHEME="$scheme" SSL="$ssl" DOKKU_BIN="$dokku_bin" MONIT_ENABLED="$monit_enabled" ADDRESS="$address" > "$monit_config_file"
 }
 
 monit_cmd() {

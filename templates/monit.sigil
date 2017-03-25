@@ -1,6 +1,6 @@
 {{ if .MONIT_ENABLED }}
 check host {{ .APP }} with address {{ .ADDRESS }}
-  restart program = "{{ .DOKKU_BIN }} ps:restart {{ .APP }}"
+  restart program = "{{ .DOKKU_BIN }} ps:restart {{ .APP }}" with timeout {{ default 120 .RESTART_TIMEOUT }} seconds
   if failed
      port {{ .PORT }}
      protocol {{ .SCHEME }}
