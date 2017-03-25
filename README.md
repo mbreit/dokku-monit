@@ -76,9 +76,11 @@ when updating this plugin.
 For configuring the individual app checks, you can set the
 following configuration variables (use `--no-restart`):
 
-* `MONIT_CONTENT`: Expected content in HTTP response
-* `MONIT_REQUEST`: Request path, eg. `/status`
-* `MONIT_ALERT`: Mail address to notify on state changes
+| Variable        | Default Value | Description                             |
+| ---             | ---           | ---                                     |
+| `MONIT_CONTENT` |               | Expected content in HTTP response       |
+| `MONIT_REQUEST` | `/`           | Request path, eg. `/status`             |
+| `MONIT_ALERT`   |               | Mail address to notify on state changes |
 
 For example if you want to receive alerts by mail, set
 
