@@ -6,13 +6,17 @@ log_cmd() {
     local args=""
     shift 1
 
-    while getopts "f" option; do
+    local identifier_arg="-t monit"
+
+    while getopts "fa" option; do
         case $option in
             f ) local args="$args -f"
+                ;;
+            a ) local identifier_arg=""
         esac
     done
 
-    journalctl -u dokku-monit $args
+    journalctl -u dokku-monit $identifier_arg $args
 }
 
 log_cmd $@
