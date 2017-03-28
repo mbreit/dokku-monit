@@ -13,7 +13,7 @@ for Ubuntu 14.04 are of course welcome.
 Monit has to be installed (`apt-get install monit`), but does not have
 to be started/enabled. This plugin will start its own Monit instance
 running as the `dokku` user. This way you can use the system wide Monit
-configuration however you like or disable is with
+configuration however you like or disable it with
 `systemctl disable monit`.
 
 ## Installation
