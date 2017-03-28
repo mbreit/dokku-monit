@@ -1,7 +1,6 @@
 set daemon 120            # check services at 2-minute intervals
 set mailserver localhost
-set httpd port 2813 and
-    use address localhost
-    allow localhost
+set httpd unixsocket /tmp/dokku-monit.sock
+    allow dokku:{{ .PASSWORD }}
 
 include {{ .DOKKU_ROOT }}/*/monitrc
