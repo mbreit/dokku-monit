@@ -4,10 +4,32 @@
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-export DEBIAN_FRONTEND=noninteractive
 
-case "$DOKKU_DISTRO" in
-  debian|ubuntu)
-    apt-get install --force-yes -qq -y monit
-    ;;
-esac
+install_monit() {
+    case "$DOKKU_DISTRO" in
+        debian|ubuntu)
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get install --force-yes -qq -y monit
+            ;;
+        *)
+            echo "Unsupported distribution. Please install Monit and run sudo dokku plugin:install-dependencies again."
+            return 1
+    esac
+}
+
+enable_systemd_unit() {
+    local plugin_path="$PLUGIN_AVAILABLE_PATH/monit"
+
+    if hash systemctl 2> /dev/null; then
+        systemctl is-enabled dokku-monit.service > /dev/null 2>&1 || systemctl enable "$plugin_path/dokku-monit.service" --now
+    else
+        echo >&2 "Could not install systemd unit because systemctl was not found."
+        return 1
+    fi
+}
+
+if hash monit 2> /dev/null; then
+    enable_systemd_unit
+else
+    install_monit && enable_systemd_unit
+fi
