@@ -2,7 +2,7 @@
 check host {{ .APP }} with address {{ .ADDRESS }}
   restart program = "{{ .DOKKU_BIN }} ps:restart {{ .APP }}" with timeout {{ default 120 .RESTART_TIMEOUT }} seconds
   if failed
-     port {{ .PORT }}
+     port {{ default 80 .PORT }}
      protocol {{ .SCHEME }}
      http headers [Host: {{ .DOMAIN }}]
      request "{{ default "/" .REQUEST }}"
