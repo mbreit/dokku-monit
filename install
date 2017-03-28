@@ -16,10 +16,10 @@ plugin-install() {
     local plugin_path="$PLUGIN_AVAILABLE_PATH/monit"
 
     if [[ ! -f "$DOKKU_ROOT/.monitrc" ]]; then
-        cp monitrc "$DOKKU_ROOT/.monitrc"
+        sigil -f "$plugin_path/templates/monitrc.sigil" DOKKU_ROOT="$DOKKU_ROOT" > "$DOKKU_ROOT/.monitrc"
 
         chown dokku:dokku "$DOKKU_ROOT/.monitrc"
-        chmod 0500 "$DOKKU_ROOT/.monitrc"
+        chmod 0600 "$DOKKU_ROOT/.monitrc"
     fi
 
     if hash monit 2> /dev/null; then
