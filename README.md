@@ -1,11 +1,15 @@
 # dokku monit (in development, *unstable*)
 
-Dokku plugin to monitor and restart failing apps with Monit.
+Dokku plugin which provides health checks by monitoring and
+restarting apps with Monit.
 
 ## Requirements
 
 This plugin is developed and tested on Ubuntu 16.04 and Dokku 0.8.2.
-Pull requests to support other distributions are of course welcome.
+It should work on other distributions but requires systemd.
+Pull requests to support other init systems such as upstart
+for Ubuntu 14.04 are of course welcome.
+
 Monit has to be installed (`apt-get install monit`), but does not have
 to be started/enabled. This plugin will start its own Monit instance
 running as the `dokku` user. This way you can use the system wide Monit
@@ -62,7 +66,8 @@ dokku monit:status myapp
 dokku monit:statusall
 ```
 
-The monit logs can be shown with:
+The monit logs can be shown with (requires syslog to be configured
+to log to journald, which is the default on Ubuntu 16.04):
 
 ```shell
 dokku monit:logs
