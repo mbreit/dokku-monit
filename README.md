@@ -1,4 +1,4 @@
-# dokku monit (in development, *unstable*)
+# dokku monit (*alpha*)
 
 Dokku plugin which provides health checks by monitoring and
 restarting apps with Monit.
