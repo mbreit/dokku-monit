@@ -2,7 +2,7 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 escape_string() {
-    echo "${1//[^[:alnum:][:blank:]@.\/?=-]/}"
+    echo "${1//[^[:alnum:][:blank:]@.\/?=_-]/}"
 }
 
 escape_domain() {
