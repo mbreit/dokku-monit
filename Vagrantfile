@@ -65,8 +65,8 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    wget https://raw.githubusercontent.com/dokku/dokku/v0.8.2/bootstrap.sh;
-    sudo DOKKU_TAG=v0.8.2 bash bootstrap.sh
+    wget https://raw.githubusercontent.com/dokku/dokku/v0.11.3/bootstrap.sh;
+    sudo DOKKU_TAG=v0.11.3 bash bootstrap.sh
     sudo ln -s /vagrant /var/lib/dokku/plugins/available/monit
     sudo dokku plugin:enable monit
   SHELL

@@ -5,7 +5,7 @@ restarting apps with Monit.
 
 ## Requirements
 
-This plugin is developed and tested on Ubuntu 16.04 and Dokku 0.8.2.
+This plugin is developed and tested on Ubuntu 16.04 and Dokku 0.11.3.
 It should work on other distributions but requires systemd.
 Pull requests to support other init systems such as upstart
 for Ubuntu 14.04 are of course welcome.
