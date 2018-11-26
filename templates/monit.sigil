@@ -4,7 +4,7 @@ check host {{ .APP }} with address {{ .ADDRESS }}
   if failed
      port {{ default 80 .PORT }}
      protocol {{ .SCHEME }}
-     http headers [Host: {{ .DOMAIN }}]
+     {{ if .DOMAIN }}http headers [Host: {{ .DOMAIN }}]{{ end }}
      request "{{ default "/" .REQUEST }}"
      {{ if .CONTENT }}content = "{{ .CONTENT }}"{{ end }}
      for {{ default 2 .RESTART_CYCLES }} cycles
