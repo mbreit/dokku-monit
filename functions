@@ -20,12 +20,12 @@ monit_build_app_config() {
 
     local ssl=false
     local scheme="http"
-    local port="$(escape_number "$(config_get "$app" DOKKU_NGINX_PORT)")"
+    local port=$(escape_number $(config_get "$app" DOKKU_PROXY_PORT || config_get "$app" DOKKU_NGINX_PORT))
 
     if is_ssl_enabled "$app"; then
         local ssl=true
         local scheme="https"
-        local port="$(escape_number "$(config_get "$app" DOKKU_NGINX_SSL_PORT)")"
+        local port=$(escape_number $(config_get "$app" DOKKU_PROXY_SSL_PORT || config_get "$app" DOKKU_NGINX_SSL_PORT))
     fi
 
     local content="$(escape_string "$(config_get "$app" MONIT_CONTENT || true)")"
