@@ -49,7 +49,6 @@ monit_reload() {
 }
 
 monit_enable() {
-
     config_set --no-restart "$1" "MONIT_ENABLED=true"
 }
 
