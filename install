@@ -5,7 +5,9 @@ enable_systemd_unit() {
     local plugin_path="$PLUGIN_AVAILABLE_PATH/monit"
 
     if hash systemctl 2> /dev/null; then
-        systemctl is-enabled dokku-monit.service > /dev/null 2>&1 || systemctl enable "$plugin_path/dokku-monit.service" --now
+        cp -f "$plugin_path/dokku-monit.service" /etc/systemd/system/
+        systemctl reenable dokku-monit.service
+        systemctl start dokku-monit.service
     else
         echo >&2 "Could not install systemd unit because systemctl was not found."
         return 1
