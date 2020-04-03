@@ -92,7 +92,7 @@ following configuration variables (use `--no-restart`):
 | ---                        |     --- | ---                                                      |
 | `MONIT_CONTENT`            |         | Expected content in HTTP response                        |
 | `MONIT_REQUEST`            |     `/` | Request path, eg. `/status`                              |
-| `MONIT_ALERT`              |         | Mail address to notify on state changes                  |
+| `MONIT_ALERT`              |         | Mail address to notify on state changes. Requires [mail server to be configured](https://mmonit.com/monit/documentation/monit.html#Setting-a-mail-server-for-alert-delivery).                  |
 | `MONIT_RESTART_TIMEOUT`    |     120 | Timeout for `dokku ps:restart` in seconds                |
 | `MONIT_RESTART_CYCLES`     |       2 | Number of failed checks before restarting the app        |
 | `MONIT_UNMONITOR_RESTARTS` |       5 | Restart Limit: Number of restarts before unmonitoring    |
